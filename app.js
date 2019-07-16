@@ -1,23 +1,25 @@
-const koa = require('koa');
-const app = new koa();
+const Koa = require('koa');
+const app = new Koa();
+const Router = require('./Router.js');
+const router = new Router();
+// app.use(async (ctx, next) => {
+//   const { url, method } = ctx;
+//   console.log(url, method);
+//   if( url === '/404' && method === 'GET' ) {
+//     ctx.body = 'Page Not Found';
+//     ctx.status = 404;
+//   } else {
+//     ctx.body = 'Default Content';
+//   }
+//   await next();
+// })
 
+router.get('/404', (context, next) => {
+  context.body = 'Page not found';
+  context.status = 404;
+})
+app.use(router.routes());
 
-/**
- *  ctx => context对象，上下文对象
- *  一般包含request和response
- */
-app.use(async (ctx, next) => {
-  console.log(ctx);
-  console.log('--------');
-  console.log(next);
-  await next();
-  ctx.response.type = 'text/html';
-  ctx.response.body = '<h1>Hello World</h1>';
-});
-
-
-
-app.listen(3000, () => {
-  console.log('server is running at http://localhost:3000');
-});
-
+app.listen(4000, () => {
+  console.log('server is listening 4000');
+})

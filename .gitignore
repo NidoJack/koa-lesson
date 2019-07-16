@@ -1,3 +1,5 @@
 code/node_modules/
 code/logs/
 *.lock
+node_modules/
+.vscode/
