@@ -3,21 +3,20 @@ const Route = require("koa-router");
 const app = new Koa();
 const router = new Route();
 
-// 支持单个
+// 支持单个路由内多个中间件处理，便于处理
 router.get(
   "/users/:id",
-  (ctx, next) => {
-    return User.findOne(ctx.params.id).then(function(user) {
-      ctx.user = user;
-      next();
-    });
+  async (ctx, next) => {
+    ctx.response.body = '<h1>user page</h1>';
+    ctx.user = {id: 3, name: 'xianming'};
+    await next();
   },
-  (ctx, next) => {
+  async (ctx, next) => {
     console.log(ctx.user);
   }
 );
 
 app.use(router.routes());
 app.listen(3000, () => {
-  console.log('server listening port 3000');
-})
+  console.log("server listening port 3000");
+});
