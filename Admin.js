@@ -1,5 +1,6 @@
 module.exports = () => {
   return async (ctx, next) => {
+    console.log(ctx.state);
     if (ctx.state.user.username === "admin") {
       next();
     } else {
